@@ -37,8 +37,8 @@ public class MyTicketsPanel extends JPanel {
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
             
-            // Add a semi-transparent overlay
-            g.setColor(new Color(255, 255, 255, 180));
+            // Add a lighter semi-transparent overlay
+            g.setColor(new Color(255, 255, 255, 120));
             g.fillRect(0, 0, getWidth(), getHeight());
         }
     }

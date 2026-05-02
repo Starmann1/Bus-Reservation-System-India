@@ -35,8 +35,8 @@ public class LoginPanel extends JPanel {
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
             
-            // Add a semi-transparent overlay to make text more readable
-            g.setColor(new Color(255, 255, 255, 180));
+            // Add a lighter semi-transparent overlay to make text more readable
+            g.setColor(new Color(255, 255, 255, 120));
             g.fillRect(0, 0, getWidth(), getHeight());
         }
     }

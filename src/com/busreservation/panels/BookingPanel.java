@@ -37,7 +37,7 @@ public class BookingPanel extends JPanel {
         setLayout(new BorderLayout());
         
         try {
-            backgroundImage = new ImageIcon(getClass().getResource("/resources/images/book_bg.jpg")).getImage();
+            backgroundImage = new ImageIcon(getClass().getResource("/resources/images/tickets_bg.jpg")).getImage();
         } catch (Exception e) {
             System.err.println("Could not load background image: " + e.getMessage());
         }
@@ -52,8 +52,8 @@ public class BookingPanel extends JPanel {
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
             
-            // Add a semi-transparent overlay
-            g.setColor(new Color(255, 255, 255, 180));
+            // Add a lighter semi-transparent overlay
+            g.setColor(new Color(255, 255, 255, 120));
             g.fillRect(0, 0, getWidth(), getHeight());
         }
     }
@@ -213,12 +213,12 @@ public class BookingPanel extends JPanel {
             BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
             BorderFactory.createEmptyBorder(15, 15, 15, 15)
         ));
-        card.setBackground(Color.WHITE);
+        card.setBackground(new Color(255, 255, 255, 200));
         card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
 
         // Bus Details Panel
         JPanel detailsPanel = new JPanel(new GridLayout(4, 2, 10, 5));
-        detailsPanel.setBackground(Color.WHITE);
+        detailsPanel.setOpaque(false);
         
         detailsPanel.add(createBoldLabel("Travel Name:"));
         detailsPanel.add(createNormalLabel(travelName));
@@ -236,11 +236,11 @@ public class BookingPanel extends JPanel {
 
         // Right Panel (Fare and Button)
         JPanel rightPanel = new JPanel(new BorderLayout());
-        rightPanel.setBackground(Color.WHITE);
+        rightPanel.setOpaque(false);
         
         JPanel farePanel = new JPanel();
         farePanel.setLayout(new BoxLayout(farePanel, BoxLayout.Y_AXIS));
-        farePanel.setBackground(Color.WHITE);
+        farePanel.setOpaque(false);
         
         JLabel distanceLabel = new JLabel(distance + " km");
         distanceLabel.setFont(new Font("Arial", Font.PLAIN, 12));

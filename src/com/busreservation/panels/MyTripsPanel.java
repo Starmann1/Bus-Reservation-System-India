@@ -39,8 +39,8 @@ public class MyTripsPanel extends JPanel {
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
             
-            // Add a semi-transparent overlay
-            g.setColor(new Color(255, 255, 255, 180));
+            // Add a lighter semi-transparent overlay
+            g.setColor(new Color(255, 255, 255, 120));
             g.fillRect(0, 0, getWidth(), getHeight());
         }
     }
@@ -54,6 +54,7 @@ public class MyTripsPanel extends JPanel {
 
         // Tabbed Pane
         JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setOpaque(false);
 
         // Upcoming Bookings Tab
         upcomingModel = new DefaultTableModel(
@@ -67,6 +68,8 @@ public class MyTripsPanel extends JPanel {
         upcomingTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         upcomingTable.setRowHeight(25);
         JScrollPane upcomingScroll = new JScrollPane(upcomingTable);
+        upcomingScroll.setOpaque(false);
+        upcomingScroll.getViewport().setOpaque(false);
 
         // Previous Bookings Tab
         previousModel = new DefaultTableModel(
@@ -80,6 +83,8 @@ public class MyTripsPanel extends JPanel {
         previousTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         previousTable.setRowHeight(25);
         JScrollPane previousScroll = new JScrollPane(previousTable);
+        previousScroll.setOpaque(false);
+        previousScroll.getViewport().setOpaque(false);
 
         tabbedPane.addTab("Upcoming Bookings", upcomingScroll);
         tabbedPane.addTab("Previous Bookings", previousScroll);
