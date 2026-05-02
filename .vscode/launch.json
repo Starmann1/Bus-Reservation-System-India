@@ -1,0 +1,44 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "BusReservationSystem",
+            "request": "launch",
+            "mainClass": "com.busreservation.BusReservationSystem",
+            "projectName": "java_mini_project_bd1666d4"
+        },
+        {
+            "type": "java",
+            "name": "BusReservationSystem",
+            "request": "launch",
+            "mainClass": "com.busreservation.BusReservationSystem",
+            "projectName": "java_mini_project_e9d3992f"
+        },
+        {
+            "type": "java",
+            "name": "BusReservationSystem",
+            "request": "launch",
+            "mainClass": "com.busreservation.BusReservationSystem",
+            "projectName": "java_mini_project_9a5f3867"
+        },
+        {
+            "type": "java",
+            "name": "BusReservationSystem",
+            "request": "launch",
+            "mainClass": "com.busreservation.BusReservationSystem",
+            "projectName": "java mini project_57b693c7"
+        },
+        {
+            "type": "java",
+            "name": "Launch BusReservationSystem",
+            "request": "launch",
+            "mainClass": "com.busreservation.BusReservationSystem",
+            "projectName": "BusReservationSystem",
+            "classPaths": [
+                "${workspaceFolder}/lib/mysql-connector-java-8.0.33.jar",
+                "${workspaceFolder}/lib/jcalendar-1.4.jar"
+            ]
+        }
+    ]
+}
