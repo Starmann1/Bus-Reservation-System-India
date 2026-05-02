@@ -79,4 +79,4 @@ The system supports travel between 50 major cities including:
 - **East**: Kolkata, Patna, Ranchi, Guwahati, etc.
 
 ## 📄 License
-This project is for educational purposes as a Java Mini Project.
+This project is for educational purposes as a MongoDB Mini Project.
