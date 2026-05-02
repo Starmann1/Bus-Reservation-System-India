@@ -77,6 +77,7 @@ public class MyTripsPanel extends JPanel {
         upcomingScroll.setOpaque(false);
         upcomingScroll.getViewport().setOpaque(false);
         upcomingScroll.setBorder(BorderFactory.createEmptyBorder());
+        upcomingScroll.setBackground(new Color(0,0,0,0));
 
         // Previous Bookings Tab
         previousModel = new DefaultTableModel(
@@ -98,23 +99,30 @@ public class MyTripsPanel extends JPanel {
         previousScroll.setOpaque(false);
         previousScroll.getViewport().setOpaque(false);
         previousScroll.setBorder(BorderFactory.createEmptyBorder());
+        previousScroll.setBackground(new Color(0,0,0,0));
 
         tabbedPane.addTab("Upcoming Bookings", upcomingScroll);
         tabbedPane.addTab("Previous Bookings", previousScroll);
 
-        // Make cell renderers transparent
+        // Make cell renderers transparent and apply to ALL columns
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 if (!isSelected) {
                     ((JComponent)c).setOpaque(false);
+                    c.setBackground(new Color(0,0,0,0));
                 }
                 return c;
             }
         };
-        upcomingTable.setDefaultRenderer(Object.class, renderer);
-        previousTable.setDefaultRenderer(Object.class, renderer);
+        
+        for (int i = 0; i < upcomingTable.getColumnCount(); i++) {
+            upcomingTable.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+        for (int i = 0; i < previousTable.getColumnCount(); i++) {
+            previousTable.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
 
         add(tabbedPane, BorderLayout.CENTER);
 
