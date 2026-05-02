@@ -12,7 +12,7 @@ public class BusReservationSystem extends JFrame {
     private int userId;
 
     public BusReservationSystem() {
-        setTitle("Bus Reservation System");
+        setTitle("Bus Reservation System - India");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
