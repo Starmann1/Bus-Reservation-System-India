@@ -67,9 +67,13 @@ public class MyTripsPanel extends JPanel {
         upcomingTable = new JTable(upcomingModel);
         upcomingTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         upcomingTable.setRowHeight(25);
+        upcomingTable.setOpaque(false);
+        upcomingTable.setBackground(new Color(0, 0, 0, 0));
+        
         JScrollPane upcomingScroll = new JScrollPane(upcomingTable);
         upcomingScroll.setOpaque(false);
         upcomingScroll.getViewport().setOpaque(false);
+        upcomingScroll.setBorder(BorderFactory.createEmptyBorder());
 
         // Previous Bookings Tab
         previousModel = new DefaultTableModel(
@@ -82,21 +86,28 @@ public class MyTripsPanel extends JPanel {
         previousTable = new JTable(previousModel);
         previousTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         previousTable.setRowHeight(25);
+        previousTable.setOpaque(false);
+        previousTable.setBackground(new Color(0, 0, 0, 0));
+        
         JScrollPane previousScroll = new JScrollPane(previousTable);
         previousScroll.setOpaque(false);
         previousScroll.getViewport().setOpaque(false);
+        previousScroll.setBorder(BorderFactory.createEmptyBorder());
 
         tabbedPane.addTab("Upcoming Bookings", upcomingScroll);
         tabbedPane.addTab("Previous Bookings", previousScroll);
 
         add(tabbedPane, BorderLayout.CENTER);
 
-        // Refresh Button
+        // Refresh Button Panel
+        JPanel bottomPanel = new JPanel(new FlowLayout());
+        bottomPanel.setOpaque(false);
         JButton refreshBtn = new JButton("Refresh");
         refreshBtn.setBackground(new Color(0, 102, 204));
         refreshBtn.setForeground(Color.WHITE);
         refreshBtn.setFont(new Font("Arial", Font.BOLD, 12));
-        add(refreshBtn, BorderLayout.SOUTH);
+        bottomPanel.add(refreshBtn);
+        add(bottomPanel, BorderLayout.SOUTH);
 
         refreshBtn.addActionListener(e -> loadTrips());
     }

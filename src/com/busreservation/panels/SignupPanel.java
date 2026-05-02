@@ -15,12 +15,31 @@ public class SignupPanel extends JPanel {
     private JPasswordField passwordField;
     private JComboBox<String> genderBox;
 
+    private Image backgroundImage;
+
     public SignupPanel(BusReservationSystem mainFrame) {
         this.mainFrame = mainFrame;
         setLayout(new GridBagLayout());
-        setBackground(new Color(240, 248, 255));
+        
+        try {
+            backgroundImage = new ImageIcon(getClass().getResource("/resources/images/login_bg.jpg")).getImage();
+        } catch (Exception e) {
+            System.err.println("Could not load background image: " + e.getMessage());
+        }
         
         initComponents();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            
+            // Add a light semi-transparent overlay to make text more readable
+            g.setColor(new Color(255, 255, 255, 120));
+            g.fillRect(0, 0, getWidth(), getHeight());
+        }
     }
 
     private void initComponents() {

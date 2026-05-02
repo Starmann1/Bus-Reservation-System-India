@@ -61,6 +61,8 @@ public class MyTicketsPanel extends JPanel {
         table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setRowHeight(25);
+        table.setOpaque(false);
+        table.setBackground(new Color(0, 0, 0, 0));
         
         // Custom renderer for status column
         table.getColumnModel().getColumn(7).setCellRenderer((tbl, value, isSelected, hasFocus, row, column) -> {
@@ -71,7 +73,7 @@ public class MyTicketsPanel extends JPanel {
                 label.setBackground(tbl.getSelectionBackground());
                 label.setForeground(tbl.getSelectionForeground());
             } else {
-                label.setBackground(Color.WHITE);
+                label.setBackground(new Color(255, 255, 255, 100)); // Semi-transparent
                 if ("CONFIRMED".equals(value.toString())) {
                     label.setForeground(new Color(0, 153, 76));
                 } else if ("CANCELLED".equals(value.toString())) {
@@ -95,7 +97,7 @@ public class MyTicketsPanel extends JPanel {
                 label.setBackground(tbl.getSelectionBackground());
                 label.setForeground(tbl.getSelectionForeground());
             } else {
-                label.setBackground(Color.WHITE);
+                label.setBackground(new Color(255, 255, 255, 100)); // Semi-transparent
                 label.setForeground(new Color(0, 102, 204));
             }
             
@@ -105,6 +107,9 @@ public class MyTicketsPanel extends JPanel {
         });
         
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
         add(scrollPane, BorderLayout.CENTER);
 
         // Button Panel

@@ -61,7 +61,13 @@ public class CancellationPanel extends JPanel {
         table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setRowHeight(25);
+        table.setOpaque(false);
+        table.setBackground(new Color(0, 0, 0, 0));
+        
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
         add(scrollPane, BorderLayout.CENTER);
 
         // Button Panel
