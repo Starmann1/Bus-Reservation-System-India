@@ -3,6 +3,7 @@ package com.busreservation.panels;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import com.busreservation.DatabaseConnection;
 import com.mongodb.client.MongoCollection;
@@ -64,10 +65,27 @@ public class CancellationPanel extends JPanel {
         table.setOpaque(false);
         table.setBackground(new Color(0, 0, 0, 0));
         
+        // Add transparent cell renderer to all columns
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    ((JComponent)c).setOpaque(false);
+                    c.setBackground(new Color(0, 0, 0, 0));
+                }
+                return c;
+            }
+        };
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+        
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.setBackground(new Color(0, 0, 0, 0));
         add(scrollPane, BorderLayout.CENTER);
 
         // Button Panel
