@@ -17,13 +17,32 @@ public class MyTripsPanel extends JPanel {
     private JTable upcomingTable;
     private JTable previousTable;
 
+    private Image backgroundImage;
+
     public MyTripsPanel(int userId) {
         this.userId = userId;
         setLayout(new BorderLayout());
-        setBackground(Color.WHITE);
+        
+        try {
+            backgroundImage = new ImageIcon(getClass().getResource("/resources/images/trips_bg.jpg")).getImage();
+        } catch (Exception e) {
+            System.err.println("Could not load background image: " + e.getMessage());
+        }
         
         initComponents();
         loadTrips();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            
+            // Add a semi-transparent overlay
+            g.setColor(new Color(255, 255, 255, 180));
+            g.fillRect(0, 0, getWidth(), getHeight());
+        }
     }
 
     private void initComponents() {

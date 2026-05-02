@@ -6,6 +6,13 @@
             "name": "BusReservationSystem",
             "request": "launch",
             "mainClass": "com.busreservation.BusReservationSystem",
+            "projectName": "Bus-Reservation-System_a6071737"
+        },
+        {
+            "type": "java",
+            "name": "BusReservationSystem",
+            "request": "launch",
+            "mainClass": "com.busreservation.BusReservationSystem",
             "projectName": "java_mini_project_bd1666d4"
         },
         {

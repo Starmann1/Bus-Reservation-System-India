@@ -30,13 +30,32 @@ public class BookingPanel extends JPanel {
         "Volvo AC", "Multi-Axle AC", "Semi Sleeper"
     };
 
+    private Image backgroundImage;
+
     public BookingPanel(int userId) {
         this.userId = userId;
         setLayout(new BorderLayout());
-        setBackground(Color.WHITE);
+        
+        try {
+            backgroundImage = new ImageIcon(getClass().getResource("/resources/images/book_bg.jpg")).getImage();
+        } catch (Exception e) {
+            System.err.println("Could not load background image: " + e.getMessage());
+        }
         
         initDistanceMap();
         initComponents();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            
+            // Add a semi-transparent overlay
+            g.setColor(new Color(255, 255, 255, 180));
+            g.fillRect(0, 0, getWidth(), getHeight());
+        }
     }
 
     private void initDistanceMap() {
@@ -70,7 +89,7 @@ public class BookingPanel extends JPanel {
 
     private void initComponents() {
         JPanel topPanel = new JPanel(new GridBagLayout());
-        topPanel.setBackground(Color.WHITE);
+        topPanel.setOpaque(false);
         topPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -136,8 +155,10 @@ public class BookingPanel extends JPanel {
         // Bus List Panel
         busListPanel = new JPanel();
         busListPanel.setLayout(new BoxLayout(busListPanel, BoxLayout.Y_AXIS));
-        busListPanel.setBackground(Color.WHITE);
+        busListPanel.setOpaque(false);
         JScrollPane scrollPane = new JScrollPane(busListPanel);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
         add(scrollPane, BorderLayout.CENTER);
 
         // Action Listener
