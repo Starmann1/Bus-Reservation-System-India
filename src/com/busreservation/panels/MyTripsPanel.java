@@ -53,9 +53,22 @@ public class MyTripsPanel extends JPanel {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         add(titleLabel, BorderLayout.NORTH);
 
-        // Tabbed Pane
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setOpaque(false);
+        // Custom Tab Panel (Buttons)
+        JPanel tabHeader = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        tabHeader.setOpaque(false);
+        JButton upcomingBtn = new JButton("Upcoming Bookings");
+        JButton previousBtn = new JButton("Previous Bookings");
+        
+        styleTabButton(upcomingBtn, true);
+        styleTabButton(previousBtn, false);
+        
+        tabHeader.add(upcomingBtn);
+        tabHeader.add(previousBtn);
+
+        // Content Panel with CardLayout
+        CardLayout cardLayout = new CardLayout();
+        JPanel contentPanel = new JPanel(cardLayout);
+        contentPanel.setOpaque(false);
 
         // Upcoming Bookings Tab
         upcomingModel = new DefaultTableModel(
@@ -66,18 +79,10 @@ public class MyTripsPanel extends JPanel {
             }
         };
         upcomingTable = new JTable(upcomingModel);
-        upcomingTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        upcomingTable.setRowHeight(25);
-        upcomingTable.setOpaque(false);
-        upcomingTable.setBackground(new Color(0, 0, 0, 0));
-        upcomingTable.setShowGrid(true);
-        upcomingTable.setGridColor(new Color(200, 200, 200, 50));
+        setupTransparentTable(upcomingTable);
         
         JScrollPane upcomingScroll = new JScrollPane(upcomingTable);
-        upcomingScroll.setOpaque(false);
-        upcomingScroll.getViewport().setOpaque(false);
-        upcomingScroll.setBorder(BorderFactory.createEmptyBorder());
-        upcomingScroll.setBackground(new Color(0,0,0,0));
+        setupTransparentScrollPane(upcomingScroll);
 
         // Previous Bookings Tab
         previousModel = new DefaultTableModel(
@@ -88,43 +93,21 @@ public class MyTripsPanel extends JPanel {
             }
         };
         previousTable = new JTable(previousModel);
-        previousTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        previousTable.setRowHeight(25);
-        previousTable.setOpaque(false);
-        previousTable.setBackground(new Color(0, 0, 0, 0));
-        previousTable.setShowGrid(true);
-        previousTable.setGridColor(new Color(200, 200, 200, 50));
+        setupTransparentTable(previousTable);
         
         JScrollPane previousScroll = new JScrollPane(previousTable);
-        previousScroll.setOpaque(false);
-        previousScroll.getViewport().setOpaque(false);
-        previousScroll.setBorder(BorderFactory.createEmptyBorder());
-        previousScroll.setBackground(new Color(0,0,0,0));
+        setupTransparentScrollPane(previousScroll);
 
-        tabbedPane.addTab("Upcoming Bookings", upcomingScroll);
-        tabbedPane.addTab("Previous Bookings", previousScroll);
+        contentPanel.add(upcomingScroll, "UPCOMING");
+        contentPanel.add(previousScroll, "PREVIOUS");
 
-        // Make cell renderers transparent and apply to ALL columns
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (!isSelected) {
-                    ((JComponent)c).setOpaque(false);
-                    c.setBackground(new Color(0,0,0,0));
-                }
-                return c;
-            }
-        };
-        
-        for (int i = 0; i < upcomingTable.getColumnCount(); i++) {
-            upcomingTable.getColumnModel().getColumn(i).setCellRenderer(renderer);
-        }
-        for (int i = 0; i < previousTable.getColumnCount(); i++) {
-            previousTable.getColumnModel().getColumn(i).setCellRenderer(renderer);
-        }
+        // Main Container for Center
+        JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.setOpaque(false);
+        centerPanel.add(tabHeader, BorderLayout.NORTH);
+        centerPanel.add(contentPanel, BorderLayout.CENTER);
 
-        add(tabbedPane, BorderLayout.CENTER);
+        add(centerPanel, BorderLayout.CENTER);
 
         // Refresh Button Panel
         JPanel bottomPanel = new JPanel(new FlowLayout());
@@ -136,7 +119,66 @@ public class MyTripsPanel extends JPanel {
         bottomPanel.add(refreshBtn);
         add(bottomPanel, BorderLayout.SOUTH);
 
+        // Action Listeners
+        upcomingBtn.addActionListener(e -> {
+            cardLayout.show(contentPanel, "UPCOMING");
+            styleTabButton(upcomingBtn, true);
+            styleTabButton(previousBtn, false);
+        });
+        
+        previousBtn.addActionListener(e -> {
+            cardLayout.show(contentPanel, "PREVIOUS");
+            styleTabButton(upcomingBtn, false);
+            styleTabButton(previousBtn, true);
+        });
+
         refreshBtn.addActionListener(e -> loadTrips());
+    }
+
+    private void styleTabButton(JButton btn, boolean active) {
+        btn.setFocusPainted(false);
+        btn.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        if (active) {
+            btn.setBackground(new Color(0, 102, 204));
+            btn.setForeground(Color.WHITE);
+        } else {
+            btn.setBackground(new Color(255, 255, 255, 100));
+            btn.setForeground(Color.BLACK);
+        }
+    }
+
+    private void setupTransparentTable(JTable table) {
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setRowHeight(25);
+        table.setOpaque(false);
+        table.setBackground(new Color(0, 0, 0, 0));
+        table.setFillsViewportHeight(true);
+        table.setShowGrid(true);
+        table.setGridColor(new Color(150, 150, 150, 150)); // More visible grid lines
+        
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    ((JComponent)c).setOpaque(false);
+                    c.setBackground(new Color(0, 0, 0, 0));
+                }
+                return c;
+            }
+        };
+        
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+    }
+
+    private void setupTransparentScrollPane(JScrollPane scrollPane) {
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        // Adding a subtle border to define the table area
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150, 100), 1));
+        scrollPane.setBackground(new Color(0, 0, 0, 0));
     }
 
     private void loadTrips() {
