@@ -3,6 +3,7 @@ package com.busreservation.panels;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.Date;
 import com.busreservation.DatabaseConnection;
@@ -69,6 +70,8 @@ public class MyTripsPanel extends JPanel {
         upcomingTable.setRowHeight(25);
         upcomingTable.setOpaque(false);
         upcomingTable.setBackground(new Color(0, 0, 0, 0));
+        upcomingTable.setShowGrid(true);
+        upcomingTable.setGridColor(new Color(200, 200, 200, 50));
         
         JScrollPane upcomingScroll = new JScrollPane(upcomingTable);
         upcomingScroll.setOpaque(false);
@@ -88,6 +91,8 @@ public class MyTripsPanel extends JPanel {
         previousTable.setRowHeight(25);
         previousTable.setOpaque(false);
         previousTable.setBackground(new Color(0, 0, 0, 0));
+        previousTable.setShowGrid(true);
+        previousTable.setGridColor(new Color(200, 200, 200, 50));
         
         JScrollPane previousScroll = new JScrollPane(previousTable);
         previousScroll.setOpaque(false);
@@ -96,6 +101,20 @@ public class MyTripsPanel extends JPanel {
 
         tabbedPane.addTab("Upcoming Bookings", upcomingScroll);
         tabbedPane.addTab("Previous Bookings", previousScroll);
+
+        // Make cell renderers transparent
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    ((JComponent)c).setOpaque(false);
+                }
+                return c;
+            }
+        };
+        upcomingTable.setDefaultRenderer(Object.class, renderer);
+        previousTable.setDefaultRenderer(Object.class, renderer);
 
         add(tabbedPane, BorderLayout.CENTER);
 
